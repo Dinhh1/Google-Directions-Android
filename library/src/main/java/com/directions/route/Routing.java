@@ -19,6 +19,7 @@ public class Routing extends AbstractRouting {
     private final boolean optimize;
     private final String language;
     private final String key;
+    private final long departureTime;
 
     private Routing(Builder builder) {
         super(builder.listener);
@@ -29,6 +30,7 @@ public class Routing extends AbstractRouting {
         this.alternativeRoutes = builder.alternativeRoutes;
         this.language = builder.language;
         this.key = builder.key;
+        this.departureTime = builder.departureTime;
     }
 
     protected String constructURL () {
@@ -84,6 +86,11 @@ public class Routing extends AbstractRouting {
             stringBuilder.append("&language=").append(language);
         }
 
+        // departure time
+        if (departureTime > 0) {
+            stringBuilder.append("&departure_time=").append(departureTime);
+        }
+
         // API key
         if(key != null) {
             stringBuilder.append("&key=").append(key);
@@ -101,6 +108,7 @@ public class Routing extends AbstractRouting {
         private boolean optimize;
         private String language;
         private String key;
+        private long departureTime;
 
         public Builder () {
             this.travelMode = TravelMode.DRIVING;
@@ -111,6 +119,7 @@ public class Routing extends AbstractRouting {
             this.optimize = false;
             this.language = null;
             this.key = null;
+            this.departureTime = 0;
         }
 
         public Builder travelMode (TravelMode travelMode) {
@@ -153,6 +162,11 @@ public class Routing extends AbstractRouting {
 
         public Builder key(String key) {
             this.key = key;
+            return this;
+        }
+
+        public Builder departureTime(long departureTime) {
+            this.departureTime = departureTime;
             return this;
         }
 
